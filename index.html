@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catatan Belanja - Documentation (v1.0.0)</title>
+<style>
+:root{
+  --paper:#f6f9f7;
+  --surface:#ffffff;
+  --ink:#14231f;
+  --muted:#4d625b;
+  --line:#d5e0db;
+  --accent:#0b7a5b;
+  --accent-soft:#e3f3ed;
+  --warn:#8a5a00;
+  --warn-soft:#fdf3dc;
+  --code-bg:#eef3f1;
+  --head:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f1a17;
+    --surface:#15231f;
+    --ink:#e6f0ec;
+    --muted:#9db3ab;
+    --line:#2a3d37;
+    --accent:#4fd1a5;
+    --accent-soft:#17352c;
+    --warn:#f0c36a;
+    --warn-soft:#2f2813;
+    --code-bg:#1b2c27;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65}
+a{color:var(--accent)}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.layout{display:grid;grid-template-columns:1fr;max-width:1180px;margin:0 auto}
+nav.toc{padding:16px 20px;border-bottom:1px solid var(--line);background:var(--surface)}
+nav.toc summary{cursor:pointer;font-weight:600}
+nav.toc ul{list-style:none;margin:12px 0 0;padding:0}
+nav.toc li a{display:block;padding:5px 0;text-decoration:none;color:var(--muted)}
+nav.toc li a:hover{color:var(--accent)}
+main{padding:28px 20px 80px;min-width:0}
+.content{max-width:74ch}
+@media (min-width:960px){
+  .layout{grid-template-columns:270px 1fr}
+  nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;border-bottom:0;border-right:1px solid var(--line);padding:32px 22px}
+  nav.toc summary{pointer-events:none;list-style:none;font-family:var(--head);font-size:1.15rem}
+  nav.toc summary::-webkit-details-marker{display:none}
+  main{padding:48px 48px 120px}
+}
+h1,h2,h3{font-family:var(--head);line-height:1.25;font-weight:700}
+h1{font-size:2.3rem;margin:0 0 6px}
+h2{font-size:1.65rem;margin:56px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:1.2rem;margin:30px 0 8px}
+p{margin:0 0 14px}
+.lead{font-size:1.15rem;color:var(--muted)}
+.meta{color:var(--muted);margin:0 0 26px}
+code{font-family:var(--mono);font-size:.9em;background:var(--code-bg);padding:1px 6px;border-radius:4px}
+pre{font-family:var(--mono);font-size:.88rem;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;margin:0 0 18px;line-height:1.5}
+pre code{background:none;padding:0;font-size:inherit}
+ul,ol{padding-left:22px;margin:0 0 16px}
+li{margin:4px 0}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:0 8px 8px 0;margin:0 0 18px}
+.callout.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+.callout p:last-child{margin-bottom:0}
+.table-wrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{background:var(--accent-soft);font-weight:600}
+@media print{
+  nav.toc{display:none}
+  .layout{display:block}
+  body{background:#fff;color:#000;font-size:11pt}
+  main{padding:0}
+  pre,.table-wrap{break-inside:avoid}
+  h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc" aria-label="Table of contents">
+<details open>
+<summary>Contents</summary>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#running">Running the application</a></li>
+<li><a href="#cohere">Cohere API key</a></li>
+<li><a href="#user-guide">User guide</a></li>
+<li><a href="#customization">Customization</a></li>
+<li><a href="#production">Production checklist</a></li>
+<li><a href="#backup">Backup and restore</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#security">Security notes</a></li>
+<li><a href="#privacy">Privacy and data</a></li>
+<li><a href="#scaling">Scaling up</a></li>
+<li><a href="#structure">Project structure</a></li>
+<li><a href="#support">Support</a></li>
+<li><a href="#disclaimer">Disclaimer</a></li>
+<li><a href="#changelog">Changelog</a></li>
+<li><a href="#credits">Credits</a></li>
+</ul>
+</details>
+</nav>
+
+<main>
+<div class="content">
+
+<h1>Catatan Belanja</h1>
+<p class="lead">Personal and small-business finance tracker with receipt OCR and AI parsing. Laravel 12, Filament v4, PostgreSQL.</p>
+<p class="meta">Documentation for version 1.0.0 (October 2026)</p>
+
+<section id="overview">
+<h2>Overview</h2>
+<p>Catatan Belanja records your finances in one place. Upload a photo of a shopping receipt: the text is read automatically (Tesseract OCR) and turned into structured data (vendor, date, category, line items, total, change) by an AI model (Cohere). If the AI service is unavailable or no API key is set, a built-in regex parser takes over automatically.</p>
+<p>Beyond expenses, the application records income, debts and receivables with automatic settlement status, monthly budgets with alerts, a cash flow report, Excel/PDF reports, and an "Ask AI" assistant that answers questions about your own data. It is built for two kinds of users: individuals (daily records) and small businesses (multi-user, business expense categories).</p>
+
+<div class="callout warn">
+<p><strong>Interface language and currency.</strong> The application interface is written in Indonesian and amounts are shown in Indonesian Rupiah (Rp). A full English interface is not included in this version. The receipt OCR is configured for Indonesian and English receipts.</p>
+</div>
+
+<h3>Feature list</h3>
+<ul>
+<li><strong>Receipt upload with OCR.</strong> Tesseract OCR (Indonesian and English), with automatic image compression (GD) before processing.</li>
+<li><strong>AI parsing with fallback.</strong> Cohere converts OCR text into JSON. If the API fails or no key is configured, the regex parser takes over. The parsing path (AI or estimate) is shown on the detail page.</li>
+<li><strong>Admin panel (Filament v4).</strong> Full CRUD for Expenses (with line items), Income, Debts, Categories and Budgets; receipt photo preview, parsing status badge, automatic polling, and a "re-process OCR and AI" button.</li>
+<li><strong>Income.</strong> Source, amount, date received and notes, with a total income card on the dashboard.</li>
+<li><strong>Debts and receivables.</strong> Debt (money you owe) and receivable (money owed to you) with counterparty, amount and due date. Settlement status (unpaid, partial, paid) is calculated automatically, with "mark as paid" and "record partial payment" actions, dashboard cards, and Excel/PDF export.</li>
+<li><strong>Categories.</strong> Default system categories shared by all users (read-only) plus personal categories per user, with automatic category guessing from vendor and items.</li>
+<li><strong>Monthly budgets.</strong> Per category or overall. Notifications fire when usage reaches 90% and 100% (once per period each) through the Filament notification bell.</li>
+<li><strong>Reports and cash flow.</strong> Date or month filters with category filters, summaries, charts, and Excel/PDF export. The cash flow page shows total income, total expenses and balance, with a monthly chart and breakdown table.</li>
+<li><strong>Ask AI.</strong> A dashboard action for natural-language questions over expenses, income, debts and receivables. Retrieved data is summarized and sent to Cohere with a strict system prompt that discourages invented numbers. A daily per-user limit applies.</li>
+<li><strong>Multi-user.</strong> Every account sees only its own data.</li>
+<li><strong>Queue monitoring.</strong> The dashboard warns when parsing jobs are stuck (queue worker not running), counting only the logged-in user's receipts.</li>
+<li><strong>Account deletion.</strong> Users can delete their own account and all associated data after email and password verification.</li>
+</ul>
+
+<h3>How receipt processing works</h3>
+<pre><code>Photo upload -> OCR (Tesseract) -> try AI parsing (Cohere)
+                                     |-- success -> structured data
+                                     |-- API failure/timeout -> regex fallback
+                                  -> PostgreSQL -> notification, dashboard, reports</code></pre>
+</section>
+
+<section id="requirements">
+<h2>Requirements</h2>
+<ul>
+<li>PHP 8.2 or newer with the extensions <code>pdo_pgsql</code>, <code>gd</code> and <code>mbstring</code></li>
+<li>Composer, and Node.js with npm</li>
+<li>PostgreSQL 13 or newer. <strong>PostgreSQL is the only database this application was built and tested on.</strong> MySQL and MariaDB have not been tested and are not guaranteed to work.</li>
+<li>Tesseract OCR installed on the server, with language data for <code>ind</code> and <code>eng</code>. This is a system program, not a PHP package.</li>
+<li>A queue worker that keeps running (Supervisor, systemd or Task Scheduler). Without it, uploaded receipts are never processed.</li>
+<li>A Cohere API key (optional). Without a key, receipt parsing still works through the fallback parser, but the Ask AI feature cannot answer.</li>
+<li>The <code>pcntl</code> extension on Linux/macOS (optional). It is only needed for the log viewer slot of <code>composer run dev</code>; on Windows that slot is skipped automatically.</li>
+</ul>
+
+<div class="callout">
+<p><strong>Hosting.</strong> Shared hosting (cPanel) is usually not suitable: it typically does not provide PostgreSQL, does not allow installing Tesseract, and does not keep a worker running. A VPS, or any host that allows all three, is recommended. The application was developed and tested on Windows (Laragon). Deployment on Linux follows standard Laravel practice, but your server may need adjustments.</p>
+</div>
+
+<h3>Installing Tesseract</h3>
+<ul>
+<li><strong>Windows:</strong> use the UB-Mannheim installer and tick both the Indonesian and English language packs, or copy <code>ind.traineddata</code> and <code>eng.traineddata</code> into <code>C:\Program Files\Tesseract-OCR\tessdata</code>.</li>
+<li><strong>Ubuntu/Debian:</strong> <code>apt install tesseract-ocr tesseract-ocr-ind</code></li>
+</ul>
+<p>Verify with <code>tesseract --list-langs</code>. The output must include <code>ind</code> and <code>eng</code>.</p>
+</section>
+
+<section id="installation">
+<h2>Installation</h2>
+<ol>
+<li>
+<p>Install dependencies:</p>
+<pre><code>composer install
+npm install &amp;&amp; npm run build</code></pre>
+<p><code>npm install</code> is required even if you do not use Vite, because <code>composer run dev</code> relies on <code>npx concurrently</code>, which comes from <code>npm install</code>.</p>
+</li>
+<li>
+<p>Copy <code>.env.example</code> to <code>.env</code> and edit it:</p>
+<pre><code>DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=catatan_belanja
+DB_USERNAME=...
+DB_PASSWORD=...
+COHERE_API_KEY=                    # optional
+COHERE_MODEL=command-a-03-2025     # default model for receipt parsing
+COHERE_INSIGHT_MODEL=              # optional model for Ask AI
+AI_INSIGHT_DAILY_LIMIT=10          # Ask AI questions per user per day
+APP_DEBUG=false                    # must be false in production</code></pre>
+<p>Then generate the application key:</p>
+<pre><code>php artisan key:generate</code></pre>
+</li>
+<li>
+<p>Run migrations and the seeder (creates one admin account and the default categories):</p>
+<pre><code>php artisan migrate
+php artisan db:seed</code></pre>
+<div class="callout warn">
+<p><strong>Change the seeded password.</strong> The seeded account uses a weak, publicly known password (<code>test@example.com</code> / <code>password</code>). On any server reachable by other people, change the password or delete that account and register a new one right after seeding.</p>
+</div>
+</li>
+<li>
+<p>Create the storage symlink for public assets:</p>
+<pre><code>php artisan storage:link</code></pre>
+</li>
+<li>
+<p>Start the queue worker. Receipts are processed by a queued job (<code>AIParserJob</code>), not during the web request. If the worker is not running, receipts are saved but vendor, total and items are never filled in.</p>
+<pre><code>php artisan queue:work --timeout=150</code></pre>
+<p>Run it in a separate terminal, or register it with Supervisor, systemd or Task Scheduler so it restarts after a server reboot. See <a href="#running">Running the application</a> for the timeout rules.</p>
+</li>
+</ol>
+<p>The admin panel is available at <code>/admin</code>.</p>
+</section>
+
+<section id="configuration">
+<h2>Configuration</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Variable</th><th>Purpose</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><code>APP_ENV</code></td><td>Environment name</td><td><code>production</code> on live servers</td></tr>
+<tr><td><code>APP_DEBUG</code></td><td>Debug pages</td><td>Must be <code>false</code> in production. Debug pages expose stack traces.</td></tr>
+<tr><td><code>APP_URL</code></td><td>Public address</td><td>Used for notification links and absolute URLs</td></tr>
+<tr><td><code>DB_*</code></td><td>PostgreSQL connection</td><td><code>DB_CONNECTION=pgsql</code>. Do not use a superuser in production.</td></tr>
+<tr><td><code>QUEUE_CONNECTION</code></td><td>Queue driver</td><td><code>database</code> (default), <code>redis</code>, or <code>sync</code> (no worker, for personal use or development)</td></tr>
+<tr><td><code>COHERE_API_KEY</code></td><td>AI access</td><td>Optional. Required for Ask AI.</td></tr>
+<tr><td><code>COHERE_MODEL</code></td><td>Model for receipt parsing</td><td>Default <code>command-a-03-2025</code></td></tr>
+<tr><td><code>COHERE_INSIGHT_MODEL</code></td><td>Model for Ask AI</td><td>Optional. If empty, the parsing model is used.</td></tr>
+<tr><td><code>AI_INSIGHT_DAILY_LIMIT</code></td><td>Ask AI daily limit</td><td>Default 10 questions per user per day</td></tr>
+<tr><td><code>LOG_LEVEL</code></td><td>Log verbosity</td><td>Use <code>info</code> in production. Receipt text, raw AI responses and user questions are only logged at <code>debug</code> level.</td></tr>
+<tr><td><code>SESSION_ENCRYPT</code></td><td>Encrypt sessions</td><td><code>true</code> by default in <code>.env.example</code></td></tr>
+<tr><td><code>SESSION_SECURE_COOKIE</code></td><td>HTTPS-only cookies</td><td>Set to <code>true</code> only if the site is served over HTTPS. On plain <code>http://</code> it prevents login from sticking.</td></tr>
+<tr><td><code>MAIL_*</code></td><td>Outgoing email</td><td>Needed for the password reset feature</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="running">
+<h2>Running the application</h2>
+<div class="callout warn">
+<p>The queue worker must be running. OCR and AI parsing run asynchronously. Without a worker, parsing results are never filled in.</p>
+</div>
+
+<h3>One command for development</h3>
+<p><code>composer run dev</code> starts everything in one terminal:</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Slot</th><th>Process</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td><code>server</code></td><td><code>php artisan serve</code></td><td>HTTP server at <code>http://127.0.0.1:8000</code></td></tr>
+<tr><td><code>queue</code></td><td><code>php artisan queue:work --tries=1 --timeout=150</code></td><td>Queue worker (required)</td></tr>
+<tr><td><code>logs</code></td><td><code>php artisan dev:logs</code></td><td>Real-time log viewer (forwards to <code>php artisan pail</code> when <code>pcntl</code> is available)</td></tr>
+<tr><td><code>vite</code></td><td><code>npm run dev</code></td><td>Asset hot-reload at <code>http://localhost:5173</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>On Windows the log slot prints a notice that Pail needs <code>pcntl</code> and exits cleanly without affecting the other slots. Press <code>Ctrl+C</code> to stop everything.</p>
+<p>The queue worker keeps a PHP process alive. After changing anything under <code>app/Jobs</code> or <code>app/Services</code>, restart <code>composer run dev</code> or run <code>php artisan queue:restart</code>.</p>
+
+<h3>Manual mode</h3>
+<p>Use this if <code>composer run dev</code> fails in your environment (for example Windows without Node.js).</p>
+<pre><code>php artisan serve                      # terminal 1
+php artisan queue:work --timeout=150   # terminal 2 (required)
+npm run dev                            # terminal 3 (optional, hot reload)</code></pre>
+<p>Useful commands:</p>
+<pre><code>php artisan queue:restart       # restart workers after a deploy
+php artisan queue:failed        # list failed jobs
+php artisan queue:retry all     # retry failed jobs</code></pre>
+<p><strong>Sync mode.</strong> With <code>QUEUE_CONNECTION=sync</code> no worker is needed; parsing runs during the upload request. The upload request becomes slower because it waits for OCR and AI to finish. This suits personal use and development.</p>
+
+<h3>Queue timeout rules</h3>
+<p>Three numbers must stay in this order. Breaking the order makes a job run twice, which is hard to notice because the parsed result looks correct: you only see duplicated notifications, items deleted and recreated by two processes, and double API calls.</p>
+<pre><code>job timeout (150)  &lt;=  worker --timeout (150)  &lt;  retry_after (180)
+AIParserJob::$timeout     queue:work argument      config/queue.php</code></pre>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Value</th><th>Where</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>150</td><td><code>app/Jobs/AIParserJob.php</code> (<code>$timeout</code>)</td><td>Maximum time of one job. Exceeding it counts as a failure and the job is retried.</td></tr>
+<tr><td>150</td><td><code>--timeout</code> argument of <code>queue:work</code></td><td>Maximum time of the worker child process. Must be at least the job timeout, otherwise the worker kills the job early. Laravel's default is only 60 seconds.</td></tr>
+<tr><td>180</td><td><code>config/queue.php</code> (<code>retry_after</code>)</td><td>How long Laravel waits before assuming a job is lost and handing it to another worker. Must be greater than the job timeout.</td></tr>
+</tbody>
+</table>
+</div>
+<p>The default in <code>config/queue.php</code> is already 180, so nothing needs to be set in <code>.env</code>. The only thing you must remember is the <code>--timeout=150</code> argument when you start a worker yourself. It is already included in <code>composer run dev</code>.</p>
+</section>
+
+<section id="cohere">
+<h2>Cohere API key</h2>
+<p>The key is optional. Without it, receipt parsing uses the fallback parser, and only the Ask AI feature stops working.</p>
+<ol>
+<li>Go to <code>dashboard.cohere.com</code> and create an account (Google or GitHub sign-in works; no credit card is required for a trial key).</li>
+<li>Open the "API Keys" menu. Cohere creates a free trial key named "default".</li>
+<li>Copy the key into your <code>.env</code> file: <code>COHERE_API_KEY=your_key_here</code>.</li>
+<li>Never commit or share your <code>.env</code> file. It is ignored by Git in this project.</li>
+</ol>
+<div class="callout warn">
+<p><strong>Trial keys are for testing.</strong> A trial key is free and limited (about 1,000 API calls per month) and may not be used for commercial or production applications with many users. For production, use a paid production key (see Cohere's pricing page).</p>
+</div>
+<p><strong>No key is bundled.</strong> This package intentionally contains no API key. You create your own key and pay your own usage. Sharing someone else's key exhausts the quota quickly and makes the application look broken when the code is fine.</p>
+<p><strong>Model and cost.</strong> The default model <code>command-a-03-2025</code> is accurate but costs more per token. To reduce cost, set <code>COHERE_MODEL=command-r7b-12-2024</code>. All API costs are paid by the key owner.</p>
+<p><strong>Resilience.</strong> If Cohere is unreachable, the key is missing, or the trial limit is reached, receipt parsing falls back to the built-in pattern-based parser, so receipt recording, reports, budgets and debts keep working.</p>
+</section>
+
+<section id="user-guide">
+<h2>User guide</h2>
+<p>Menu names below are shown as they appear in the interface (partly Indonesian).</p>
+
+<h3>Dashboard</h3>
+<p>The start page shows summary cards (total expenses, number of transactions, average per transaction, total income, active debts, active receivables) and a history chart. The <strong>Tanya AI</strong> (Ask AI) button at the top right opens the question box. A warning appears if receipts are stuck in processing.</p>
+
+<h3>Laporan (Reports)</h3>
+<p>Choose a date range or a month, then optionally one or more categories. The page shows a summary, a category chart and a transaction table. Use the export buttons for Excel or PDF.</p>
+
+<h3>Expenses</h3>
+<p>The main recording menu. There are two ways to add data:</p>
+<ol>
+<li><strong>From a receipt:</strong> click add and upload a receipt image (maximum 5 MB). The image is compressed, read by OCR and parsed in the background. After a few seconds the vendor, date, category, items and total are filled in, and a notification appears in the bell. Review the result through the "Periksa &amp; Edit" link.</li>
+<li><strong>Manually:</strong> enter vendor, total, date and items without a photo.</li>
+</ol>
+<p>The detail page has a <strong>re-process OCR and AI</strong> button for results that need another try. A badge and polling in the list show receipts that are still processing, and the parsing path (AI or estimate) is shown on the detail page.</p>
+
+<h3>Categories</h3>
+<p>Default categories are shared and cannot be deleted. For a default category you can only change its appearance (color and icon) for your own account. You can also create personal categories that only you can see.</p>
+
+<h3>Budgets</h3>
+<p>Set a monthly spending limit, per category or overall. The "Terpakai" (used) column shows usage for the period. Notifications fire at 90% and 100% usage, once each per period. Only one budget is allowed per category, month and year combination.</p>
+
+<h3>Utang Piutang (Debts and receivables)</h3>
+<p>Choose the type (<strong>utang</strong> = you owe, <strong>piutang</strong> = someone owes you), then enter the counterparty, amount and due date. The status (unpaid, partial, paid) is calculated automatically. Use <strong>Catat Pembayaran Sebagian</strong> (record partial payment) or <strong>Tandai Lunas</strong> (mark as paid). The list can be filtered (including by due date) and exported to Excel or PDF.</p>
+
+<h3>Pemasukan (Income)</h3>
+<p>Record money received: source, amount, date received and notes. Totals appear on the dashboard and feed the cash flow page and Ask AI.</p>
+
+<h3>Kas Arus (Cash flow)</h3>
+<p>Income versus expenses and the balance for the selected period, with a monthly chart and a detail table. Exportable to Excel and PDF.</p>
+
+<h3>Tanya AI (Ask AI)</h3>
+<p>Type a question in Indonesian (up to 2,000 characters), for example "How much did I spend last month?" or "How much debt do I have left?". The system retrieves the relevant data and asks Cohere to summarize it. A daily per-user limit applies (<code>AI_INSIGHT_DAILY_LIMIT</code>). A <code>COHERE_API_KEY</code> is required. AI answers can be wrong, so check them against the data in the related menus.</p>
+
+<h3>Profile and account</h3>
+<p>Edit account details, or delete the account. Deletion is permanent and removes everything owned by the account: expenses, income, debts and receivables, budgets, personal categories and notifications.</p>
+</section>
+
+<section id="customization">
+<h2>Customization</h2>
+<p>These are the supported ways to adjust the application without changing its structure.</p>
+<ul>
+<li><strong>AI models and limits.</strong> Set <code>COHERE_MODEL</code>, <code>COHERE_INSIGHT_MODEL</code> and <code>AI_INSIGHT_DAILY_LIMIT</code> in <code>.env</code>. To lower AI cost, use <code>command-r7b-12-2024</code> as the model. Run <code>php artisan optimize:clear</code> after changing <code>.env</code>.</li>
+<li><strong>Disable public registration.</strong> Remove or comment out the <code>->registration(Register::class)</code> line in <code>app/Providers/Filament/AdminPanelProvider.php</code>. Existing accounts keep working. This is the recommended way to limit the application to a single user or a closed group.</li>
+<li><strong>Default categories.</strong> The default (shared) categories are created by the database seeder (<code>php artisan db:seed</code>) from the category seeder under <code>database/seeders</code>. Edit that seeder to change the starting set. Each user can also add personal categories and change the appearance of default ones in the interface.</li>
+<li><strong>Queue driver and workers.</strong> Switch <code>QUEUE_CONNECTION</code> between <code>database</code>, <code>redis</code> and <code>sync</code> in <code>.env</code>, and follow the timeout rules in <a href="#running">Running the application</a>. For heavier traffic see <a href="#scaling">Scaling up</a>.</li>
+<li><strong>Interface language.</strong> Interface text is written in Indonesian inside the application code and amounts are shown in Rupiah. A translation or a different currency format is not included; changing them means editing those strings in the application code.</li>
+</ul>
+<div class="callout warn">
+<p><strong>Before you extend the code.</strong> Read <a href="#security">Security notes</a> first. In particular, queries in console commands and queued jobs need an explicit <code>user_id</code> filter, category queries need their own filter, and adding a role system is not a small change.</p>
+</div>
+</section>
+
+<section id="production">
+<h2>Production checklist</h2>
+<h3>Environment</h3>
+<ul>
+<li><code>APP_ENV=production</code></li>
+<li><code>APP_DEBUG=false</code></li>
+<li><code>APP_URL</code> matches your real domain</li>
+<li><code>LOG_LEVEL=info</code> (not <code>debug</code>)</li>
+<li><code>SESSION_ENCRYPT=true</code></li>
+<li><code>SESSION_SECURE_COOKIE=true</code> only when served over HTTPS</li>
+<li>Database credentials for a regular user, not <code>root</code> or a superuser</li>
+<li><code>COHERE_API_KEY</code> set to your own key, or left empty if you do not use AI</li>
+<li>The seeded account's password changed, or the account deleted</li>
+<li><code>MAIL_*</code> configured if you want password reset emails</li>
+</ul>
+<h3>Code and assets</h3>
+<ul>
+<li><code>composer install --no-dev --optimize-autoloader</code></li>
+<li><code>npm install &amp;&amp; npm run build</code> (not <code>npm run dev</code>; without a build the panel has no CSS)</li>
+<li><code>php artisan migrate --force</code></li>
+<li><code>php artisan storage:link</code></li>
+<li>Web server document root pointed at <code>public/</code>, never the project root</li>
+<li><code>storage/</code> and <code>bootstrap/cache/</code> writable by the web server user</li>
+</ul>
+<h3>Background services</h3>
+<ul>
+<li>Queue worker running with <code>--timeout=150</code> under Supervisor, systemd or Task Scheduler</li>
+<li><code>php artisan queue:restart</code> after every deploy</li>
+<li>Worker runs as a non-root account</li>
+<li><code>tesseract --list-langs</code> lists <code>ind</code> and <code>eng</code></li>
+</ul>
+<h3>After deploying</h3>
+<ul>
+<li>Upload one real receipt and confirm the photo uploads, the notification arrives, and vendor, total and items are filled in</li>
+<li>Open <code>/admin</code> in a private window and confirm no debug page or error leaks server paths</li>
+<li>Run <code>php artisan test</code> only on a development or test environment with a separate database. <strong>Never run it against a production database</strong>: tests can reset or delete data.</li>
+</ul>
+</section>
+
+<section id="backup">
+<h2>Backup and restore</h2>
+<p>Your data lives on your own server, so backups are your responsibility. Back up two things: the database and the receipt photos.</p>
+<h3>Database</h3>
+<pre><code>pg_dump -U &lt;user&gt; -h 127.0.0.1 -Fc -f backup-$(date +%F).dump catatan_belanja</code></pre>
+<p>Windows (PowerShell):</p>
+<pre><code>pg_dump -U postgres -h 127.0.0.1 -Fc -f backup.dump catatan_belanja</code></pre>
+<h3>Receipt photos</h3>
+<p>Copy the folder <code>storage/app/private/receipts</code>.</p>
+<h3>Restore</h3>
+<pre><code>pg_restore -U &lt;user&gt; -h 127.0.0.1 -d catatan_belanja --clean --if-exists backup-2026-10-05.dump</code></pre>
+<h3>Automatic nightly backup (Linux)</h3>
+<p>Add to <code>crontab -e</code>:</p>
+<pre><code>0 2 * * * pg_dump -U &lt;user&gt; -h 127.0.0.1 -Fc -f /path/to/backups/db-$(date +\%F).dump catatan_belanja</code></pre>
+<p>Store the database password in <code>~/.pgpass</code> so the job does not prompt for it.</p>
+<div class="callout">
+<p>Test a restore into a separate database before you ever need it. A backup that has never been restored is not proven to work. Excel and PDF exports are reports, not backups: the application has no import feature, so they cannot be restored.</p>
+</div>
+</section>
+
+<section id="troubleshooting">
+<h2>Troubleshooting</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Receipt saved but vendor, total and items stay empty</td><td>Queue worker not running</td><td>Run <code>php artisan queue:work --timeout=150</code> (or <code>composer run dev</code>). Check <code>php artisan queue:failed</code>.</td></tr>
+<tr><td>OCR empty or "failed to process" notification</td><td>Tesseract missing or language data incomplete</td><td>Make sure <code>tesseract --list-langs</code> works from a terminal and lists <code>ind</code> and <code>eng</code>. Blurry or tilted photos also reduce accuracy.</td></tr>
+<tr><td>Pages appear without CSS</td><td>Assets not built</td><td>Run <code>npm install &amp;&amp; npm run build</code>.</td></tr>
+<tr><td>Ask AI cannot answer</td><td>Missing or wrong key, trial quota used up, or wrong model name</td><td>Check <code>COHERE_API_KEY</code> and <code>COHERE_MODEL</code>. Trial keys are limited to about 1,000 calls per month. The daily per-user limit is <code>AI_INSIGHT_DAILY_LIMIT</code>.</td></tr>
+<tr><td>Changes to <code>.env</code> or code have no effect</td><td>Cached configuration or an old worker</td><td>Run <code>php artisan optimize:clear</code> and <code>php artisan queue:restart</code>, then restart <code>composer run dev</code>.</td></tr>
+<tr><td>"Page Expired" (419) or login does not stick</td><td><code>APP_URL</code>, session or cookie mismatch</td><td>Match <code>APP_URL</code> to the address you open. On <code>http://</code>, do not set <code>SESSION_SECURE_COOKIE=true</code>. Clear browser cookies.</td></tr>
+<tr><td>Migration errors with odd SQL syntax</td><td>A database other than PostgreSQL</td><td>Use PostgreSQL 13+, the only database that was tested.</td></tr>
+<tr><td><code>SQLSTATE[08006] could not fork new process for connection</code> (mostly on Windows)</td><td>The PostgreSQL service is in a bad state; this is not an application bug</td><td>Restart the PostgreSQL service (<code>services.msc</code>, or stop and start in Laragon), close leftover <code>php.exe</code> processes, and start the application again. If it recurs, check the PostgreSQL log and antivirus exclusions.</td></tr>
+<tr><td>Receipt photo does not display</td><td>Folder permissions</td><td>Photos are served through an authenticated route from a private disk. Make sure <code>storage/</code> is writable by the web server user.</td></tr>
+<tr><td>"Queue is stuck" warning on the dashboard</td><td>Many simultaneous uploads, or the worker has died</td><td>Make sure the worker is alive; add workers if needed (see <a href="#scaling">Scaling up</a>).</td></tr>
+<tr><td>Vulnerability warnings during <code>npm install</code></td><td>Packages in the build toolchain</td><td>Run <code>npm audit fix</code> (without <code>--force</code>), then <code>npm run build</code> and check the interface.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="security">
+<h2>Security notes</h2>
+<ul>
+<li><strong>Authorization uses global scopes, not policies.</strong> Per-user isolation is done by the <code>OwnedByUserScope</code> global scope on the Expense, Income, Debt and Budget models, plus query overrides in the Category resource. If you add routes or endpoints outside Filament, add your own authorization checks.</li>
+<li><strong>Registration is open by default.</strong> Anyone can register from the panel. To disable it, remove or comment out the <code>->registration(Register::class)</code> line in <code>app/Providers/Filament/AdminPanelProvider.php</code>.</li>
+<li><strong>Single-tier data model; no roles.</strong> Every registered account becomes a panel account for its own data and cannot see other accounts. Do not add an "admin role" without also adding a roles table, policies and a management UI: the whole codebase assumes every user owns only their own data. To restrict usage (for example one user for personal use), disable registration instead.</li>
+<li><strong>Categories have no global scope.</strong> The <code>Category</code> model is deliberately left without <code>OwnedByUserScope</code> (see <code>tests/Feature/CategoryUiIsolationTest.php</code>), so every category query must add its own filter: <code>whereNull('user_id')->orWhere('user_id', Auth::id())</code>. A plain <code>Category::find()</code> can return another user's category and must not be used on any page.</li>
+<li><strong>The scope is inactive without a login.</strong> <code>OwnedByUserScope</code> does nothing for unauthenticated contexts (by design, so queues and console commands can process data). Every query in a console command or queued job must therefore use an explicit <code>where('user_id', ...)</code>, even if it looks redundant.</li>
+<li><strong>Logs avoid user data.</strong> OCR text, raw AI responses and Ask AI questions are written only at <code>debug</code> level and truncated to 200 characters (<code>App\Support\LogSanitizer</code>). Keep <code>LOG_LEVEL=info</code> in production.</li>
+<li><strong>Receipt photos are private.</strong> They are stored on a private disk (<code>storage/app/private/receipts</code>), not under <code>public/storage</code>, and served only through an authorized route (<code>/receipt-image/{expense}</code>) to the owning user.</li>
+<li>Credentials belong in <code>.env</code> only and are never committed. <code>.env.example</code> is a clean template.</li>
+</ul>
+</section>
+
+<section id="privacy">
+<h2>Privacy and data</h2>
+<ul>
+<li>All financial data is stored in your own PostgreSQL database. Nothing is sent to the seller of this application.</li>
+<li>OCR runs locally (Tesseract on your server). Receipt photos are not sent to any third party.</li>
+<li>If <code>COHERE_API_KEY</code> is set, the OCR text is sent to Cohere for parsing, and a summary of the financial data relevant to a question is sent to Cohere for Ask AI. Review Cohere's privacy policy, especially if you handle customer or business data.</li>
+<li>If <code>COHERE_API_KEY</code> is empty, no data leaves your server for AI services.</li>
+<li>If you operate the application for other people, you are responsible for complying with the data protection rules that apply to you.</li>
+</ul>
+</section>
+
+<section id="scaling">
+<h2>Scaling up</h2>
+<p>The default setup (database queue, one worker) is more than enough for personal and small-business use. If many users upload receipts at the same time:</p>
+<ol>
+<li><strong>Use Redis and several workers.</strong> Set <code>QUEUE_CONNECTION=redis</code> and run multiple <code>php artisan queue:work --queue=default --timeout=150</code> processes, or manage them with Supervisor or Laravel Horizon. With Redis, keep <code>REDIS_QUEUE_RETRY_AFTER</code> above 150 (the default is 180), otherwise jobs that exceed the visibility timeout run twice.</li>
+<li><strong>The stuck-queue warning can be normal.</strong> One parsing job takes roughly 15 to 45 seconds depending on Cohere's response time. The dashboard warns when a job has waited more than 5 minutes, which is expected during bursts with a single worker. Add workers to reduce it.</li>
+<li><strong>Serve built assets.</strong> Run <code>npm run build</code> before deploying and enable gzip or brotli compression on the web server.</li>
+<li><strong>Later, if data grows very large</strong> (thousands of rows per user), consider caching dashboard figures per user.</li>
+</ol>
+</section>
+
+<section id="structure">
+<h2>Project structure</h2>
+<pre><code>app/Filament/Resources/    Admin resources (Expenses, Incomes, Debts, Categories, Budgets)
+app/Filament/Pages/        Reports, Cash Flow (income vs expenses)
+app/Services/              OCRService, AIParserService, FinancialInsightService (Ask AI),
+                           Helper, BudgetAlertService, ImageCompressor, DeleteUserAccountService
+app/Jobs/AIParserJob.php   Async parsing job (OCR text -> AI/fallback -> database)
+app/Support/               MoneyFormatter, ReportFilter, KasArusReport, AiAnswerSanitizer,
+                           LogSanitizer, ColorHex, MonthExpression
+app/Exports/               LaporanExpenseExport, KasArusExport, DebtsExport
+app/Models/Scopes/         OwnedByUserScope (per-user data isolation)
+app/Console/Commands/      expenses:reprocess, expenses:assign-default-category,
+                           receipts:move-to-private-disk</code></pre>
+<h3>Upgrading from an older version</h3>
+<p>If you run an older version where receipt photos still live in <code>storage/app/public/receipts</code>, move them to the private disk:</p>
+<pre><code>php artisan receipts:move-to-private-disk</code></pre>
+<p>The command is idempotent and verifies each file before removing the old copy.</p>
+<h3>Tests</h3>
+<pre><code>php artisan test</code></pre>
+<p>The Pest suite (more than 360 tests) covers multi-user scoping, fallback parsing, budgets and notifications, report and export pages, debts, cash flow, Ask AI and the receipt photo route. Run it only against a separate development or test database, never production.</p>
+</section>
+
+<section id="support">
+<h2>Support</h2>
+<p>Support covers bug fixes in the original source code and basic installation help that follows this documentation.</p>
+<p>Support does not cover custom development or feature requests, setting up your server, hosting, domain or SSL, costs or outages of third-party services (such as Cohere or your hosting provider), or problems caused by changes you made to the code.</p>
+<p>Contact the seller through the message channel of the marketplace page where you purchased. Please include the steps you took, the full error message, your PHP and PostgreSQL versions, and your operating system.</p>
+</section>
+
+<section id="disclaimer">
+<h2>Disclaimer</h2>
+<ul>
+<li>This is a record-keeping tool. It is not certified accounting software, not tax advice and not financial advice.</li>
+<li>OCR and AI output can contain mistakes (misread numbers, wrong categories, inaccurate Ask AI answers). You are responsible for checking data before relying on it for financial, tax or official reporting decisions.</li>
+<li>The software is provided "as is" to the extent permitted by applicable law. Back up your database regularly.</li>
+</ul>
+</section>
+
+<section id="changelog">
+<h2>Changelog</h2>
+<h3>Version 1.0.0 (October 2026)</h3>
+<p>First release.</p>
+<ul>
+<li>Expense recording from receipt photos (Tesseract OCR and Cohere AI parsing with regex fallback), including line items.</li>
+<li>Income, debts and receivables (automatic settlement status), monthly budgets with notifications, categories, and cash flow.</li>
+<li>Reports with filters and Excel/PDF export.</li>
+<li>Ask AI for questions over your own financial data.</li>
+<li>Multi-user data isolation, account deletion, and receipt photos on a private disk.</li>
+<li>Internal security and performance review, and more than 360 automated tests.</li>
+</ul>
+</section>
+
+<section id="credits">
+<h2>Credits</h2>
+<p>This application is built on the following open-source packages and services. Their own licenses apply to them separately.</p>
+<ul>
+<li>Laravel (PHP framework)</li>
+<li>Filament v4 (admin panel)</li>
+<li>Tesseract OCR and the <code>thiagoalessio/tesseract_ocr</code> PHP wrapper</li>
+<li><code>maatwebsite/excel</code> (Excel export)</li>
+<li><code>barryvdh/laravel-dompdf</code> (PDF export)</li>
+<li>Pest (testing)</li>
+<li>Cohere API (AI parsing and Ask AI, optional, requires your own key)</li>
+</ul>
+</section>
+
+</div>
+</main>
+</div>
+</body>
+</html>
